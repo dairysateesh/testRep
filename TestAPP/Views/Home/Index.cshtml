@@ -1,0 +1,104 @@
+﻿@model TestAPP.Models.PatientSchedule
+
+@{
+    ViewBag.Title = "PatientAppointment";
+}
+
+<h2>Index</h2>
+
+
+@using (Html.BeginForm("Schedule", "Home", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Please fill the following information to schedule your visit.</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("First Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Please enter first name" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Last Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Please enter last name" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Date of Birth", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @placeholder = "Please enter DOB", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Phone Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Please enter phone number", @type = "number" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Do you have Insurance?", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label data-toggle="collapse" data-target="#demo">@Html.CheckBox("IsInsured", new { htmlAttributes = new { @class = "form-control", @data_toggle = "collapse", @data_target = "#demo" } })</label>
+                @Html.ValidationMessageFor(model => model.IsInsured, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div id="demo" class="collapse">
+            <div class="form-group">
+                @Html.Label("Insurance Carrier", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InsuranceCarrier_, new { htmlAttributes = new { @class = "form-control", @placeholder = "Please enter Insurance Carrier name" } })
+                    @Html.ValidationMessageFor(model => model.InsuranceCarrier_, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Insurance ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InsuranceID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Please enter Insurance ID" } })
+                    @Html.ValidationMessageFor(model => model.InsuranceID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+         </div>
+        <div id="APIMessage" style="display:none;">
+            Eligibility API will be invoked at this point and shown the patient an indicator about whether their insurance is valid or not and shown their expected copay that they will need to pay when they arrive at the urgent care center. 
+        </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+ $(document).ready(function(){
+     
+     $('#InsuranceID').blur(function () {
+         if ($(this).val()) {
+             $('#APIMessage').css('display', 'block');
+             $(this).unbind('blur');
+         }
+     });
+
+});
+</script>

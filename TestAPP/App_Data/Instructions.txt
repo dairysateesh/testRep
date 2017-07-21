@@ -1,0 +1,16 @@
+﻿Please do the following steps after opening the solution in VS 2015.
+
+1. Add SQL server database in APP_Data name it as "AppDB.mdf"
+2. Run the below script
+CREATE TABLE [dbo].[PatientSchedules]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [FirstName] VARCHAR(50) NOT NULL, 
+    [LastName] VARCHAR(50) NOT NULL, 
+    [DOB] DATETIME NULL, 
+    [PhoneNumber] VARCHAR(50) NULL, 
+    [IsInsured] VARCHAR(50) NULL, 
+    [InsuranceCarrier ] VARCHAR(50) NULL, 
+    [InsuranceID] VARCHAR(50) NULL, 
+    [CreatedDate] DATETIME NOT NULL DEFAULT getdate()
+)
